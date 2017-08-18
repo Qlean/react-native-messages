@@ -51,7 +51,7 @@ export default class MessageBar extends Component {
       this.state.isVisibleAnimValue,
       { toValue: 1, duration: this.props.showAnimationDuration, useNativeDriver: true },
     ).start(
-      () => setTimeout(() => this.hideMessage(message), 1000),
+      () => setTimeout(() => this.hideMessage(message), this.props.duration),
     );
   }
   hideMessage(message) {
@@ -96,6 +96,7 @@ export default class MessageBar extends Component {
 
 MessageBar.defaultProps = {
   messageComponent: Message,
+  duration: 1000,
   slideAnimationOffset: 40,
   showAnimationDuration: 255,
   hideAnimationDuration: 255,
