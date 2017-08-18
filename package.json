@@ -1,8 +1,20 @@
 {
   "name": "react-native-messages",
-  "version": "0.0.2",
-  "description": "React Native toast-like messages",
+  "version": "0.0.6",
+  "description": "React Native notification-like messages",
   "main": "index.js",
-  "author": "Alexander Tewpin",
+  "author": "Alexander Tewpin <alex.tewpin@gmail.com> (https://github.com/alextewpin)",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Qlean/react-native-messages.git"
+  },
+  "keywords": [
+    "react-native",
+    "react",
+    "native",
+    "message",
+    "alert",
+    "notification"
+  ],
   "license": "MIT"
 }

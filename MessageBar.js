@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   message: {
-    height: 40,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     justifyContent: 'center',
     backgroundColor: 'grey',
