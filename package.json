@@ -1,0 +1,8 @@
+{
+  "name": "react-native-messages",
+  "version": "0.0.2",
+  "description": "React Native toast-like messages",
+  "main": "index.js",
+  "author": "Alexander Tewpin",
+  "license": "MIT"
+}
