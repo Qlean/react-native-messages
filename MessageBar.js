@@ -1,6 +1,13 @@
+// Peer dependecies
+/* eslint-disable import/no-unresolved, import/extensions */
 import React, { Component } from 'react';
-import { View, Text, Animated, StyleSheet } from 'react-native';
+import { View, Text, Animated, PanResponder, StyleSheet } from 'react-native';
+/* eslint-enable import/no-unresolved, import/extensions */
+
 import messageManager from './messageManager';
+
+const MIN_SWIPE_DISTANCE = 20;
+const MIN_SWIPE_VELOCITY = 0.15;
 
 const styles = StyleSheet.create({
   root: {
@@ -30,11 +37,30 @@ function Message({ message }) {
 
 export default class MessageBar extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isVisibleAnimValue: new Animated.Value(0),
+      isAnimatingHide: false,
       message: null,
-    }
+      config: {},
+    };
+  }
+  componentWillMount() {
+    this.panResponder = PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onPanResponderMove: (e, gesture) => {
+        if (
+          this.getConfig().closeOnSwipe
+          && !this.state.isAnimatingHide
+          && gesture.dy < -MIN_SWIPE_DISTANCE
+          && gesture.vy < -MIN_SWIPE_VELOCITY
+        ) {
+          this.hideMessage(this.state.message);
+        }
+      },
+      onShouldBlockNativeResponder: () => true,
+    });
   }
   componentDidMount() {
     messageManager.registerMessageBar(this);
@@ -42,34 +68,37 @@ export default class MessageBar extends Component {
   componentWillUnmount() {
     messageManager.unregisterMessageBar();
   }
-  pushMessage(message) {
-    this.setState({ message }, () => this.showMessage(message));
+  getConfig() {
+    return Object.assign({}, this.props, this.state.config);
+  }
+  pushMessage(message, config) {
+    this.setState({ message, config }, () => this.showMessage(message));
   }
   showMessage(message) {
+    const { duration, showAnimationDuration } = this.getConfig();
     this.state.isVisibleAnimValue.setValue(0);
+    this.setState({ isAnimatingHide: false });
     Animated.timing(
       this.state.isVisibleAnimValue,
-      { toValue: 1, duration: this.props.showAnimationDuration, useNativeDriver: true },
-    ).start(
-      () => setTimeout(() => this.hideMessage(message), this.props.duration),
-    );
+      { toValue: 1, duration: showAnimationDuration, useNativeDriver: true },
+    ).start(() => setTimeout(() => this.hideMessage(message), duration));
   }
   hideMessage(message) {
     if (message === this.state.message) {
+      const { hideAnimationDuration } = this.getConfig();
+      this.setState({ isAnimatingHide: true });
       Animated.timing(
         this.state.isVisibleAnimValue,
-        { toValue: 0, duration: this.props.hideAnimationDuration, useNativeDriver: true },
-      ).start(
-        () => {
-          if (message === this.state.message) {
-            this.setState({ message: null });
-          }
-        },
-      );
+        { toValue: 0, duration: hideAnimationDuration, useNativeDriver: true },
+      ).start(() => {
+        if (message === this.state.message) {
+          this.setState({ message: null, config: {}, isAnimatingHide: false });
+        }
+      });
     }
   }
   render() {
-    const { messageComponent: MessageComponent, slideAnimationOffset } = this.props;
+    const { messageComponent: MessageComponent, slideAnimationOffset } = this.getConfig();
     const translateY = this.state.isVisibleAnimValue.interpolate({
       inputRange: [0, 1],
       outputRange: [-slideAnimationOffset, 0],
@@ -86,9 +115,11 @@ export default class MessageBar extends Component {
           { opacity },
         ]}
       >
-        {this.state.message &&
-          <MessageComponent message={this.state.message.message}/>
-        }
+        <View {...this.panResponder.panHandlers}>
+          {this.state.message &&
+            <MessageComponent message={this.state.message.message}/>
+          }
+        </View>
       </Animated.View>
     );
   }
@@ -100,4 +131,5 @@ MessageBar.defaultProps = {
   slideAnimationOffset: 40,
   showAnimationDuration: 255,
   hideAnimationDuration: 255,
-}
+  closeOnSwipe: true,
+};

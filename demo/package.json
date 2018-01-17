@@ -1,0 +1,16 @@
+{
+  "name": "react-native-messages-example",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start --config ../../../../rn-cli-config.js"
+  },
+  "dependencies": {
+    "react": "16.2.0",
+    "react-native": "0.52.0"
+  },
+  "devDependencies": {
+    "babel-preset-react-native": "4.0.0",
+    "react-test-renderer": "16.2.0"
+  }
+}

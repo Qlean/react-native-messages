@@ -6,7 +6,7 @@ export default {
   unregisterMessageBar() {
     this.messageBar = null;
   },
-  showMessage(message) {
-    this.messageBar.pushMessage({ message });
+  showMessage(message, config) {
+    this.messageBar.pushMessage({ message }, config || {});
   },
 };
