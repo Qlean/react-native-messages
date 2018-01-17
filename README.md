@@ -10,8 +10,6 @@ React Native notification-like messages
 - Auto-hide current message to display a next one
 - Robust implementation, used in production code
 
-Messages are not interactable in any way
-
 ## Installation
 ```
 $ npm install react-native-messages
