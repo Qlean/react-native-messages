@@ -1,6 +1,6 @@
 {
   "name": "react-native-messages",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "React Native notification-like messages",
   "main": "index.js",
   "author": "Alexander Tewpin <alex.tewpin@gmail.com> (https://github.com/alextewpin)",

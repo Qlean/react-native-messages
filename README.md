@@ -19,7 +19,7 @@ $ npm install react-native-messages
 
 ## Usage
 1. Add `<MessageBar/>` to the top of your view hierarchy, as a last component. If you are using `react-navigation`, root navigator should be in place of `<App/>`. Root view should have `flex: 1`:
-```js
+```jsx
 import { MessageBar } from 'react-native-messages';
 
 <View style={{ flex: 1 }}>
@@ -29,7 +29,7 @@ import { MessageBar } from 'react-native-messages';
 ```
 
 2. Call `showMessage` in any other component:
-```js
+```jsx
 import { showMessage } from 'react-native-messages';
 
 <Button onPress={() => showMessage('You are awesome!')}/>
@@ -51,7 +51,7 @@ You can add custom config as a second argument to `showMessage` call to configur
 ## Custom message component
 Default message will receive only string, but you can implement your own message component to work with any other objects e.g Error instances:
 
-```js
+```jsx
 function Message({ message }) {
   if (message instanceof Error) {
     // return error-styled message
