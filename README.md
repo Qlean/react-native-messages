@@ -43,7 +43,6 @@ duration              | Number    | 1000
 slideAnimationOffset  | Number    | 40
 showAnimationDuration | Number    | 255
 hideAnimationDuration | Number    | 255
-hideAnimationDuration | Number    | 255
 closeOnSwipe          | Boolean   | true
 
 You can add custom config as a second argument to `showMessage` call to configure individual messages. E.g. `showMessage('You are awesome!', { duration: 3000 })`.
