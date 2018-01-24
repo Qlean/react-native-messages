@@ -47,15 +47,13 @@ export default class MessageBar extends Component {
   }
   componentWillMount() {
     this.panResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponderCapture: () => true,
+      onMoveShouldSetPanResponder: (e, gesture) => (
+        this.getConfig().closeOnSwipe
+        && gesture.dy < -MIN_SWIPE_DISTANCE
+        && gesture.vy < -MIN_SWIPE_VELOCITY
+      ),
       onPanResponderMove: (e, gesture) => {
-        if (
-          this.getConfig().closeOnSwipe
-          && !this.state.isAnimatingHide
-          && gesture.dy < -MIN_SWIPE_DISTANCE
-          && gesture.vy < -MIN_SWIPE_VELOCITY
-        ) {
+        if (!this.state.isAnimatingHide) {
           this.hideMessage(this.state.message);
         }
       },

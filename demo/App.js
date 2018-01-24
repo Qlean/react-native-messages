@@ -16,11 +16,10 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     justifyContent: 'center',
-    backgroundColor: 'tomato',
+    backgroundColor: 'lightblue',
   },
   customMessageText: {
     fontSize: 16,
-    color: 'white',
   },
 });
 
@@ -28,6 +27,11 @@ function CustomMessage({ message }) {
   return (
     <View style={styles.customMessage}>
       <Text style={styles.customMessageText}>{message}</Text>
+      <View style={styles.separator}/>
+      <Button
+        title="Hi there!"
+        onPress={() => showMessage('Hey!')}
+      />
     </View>
   );
 }
