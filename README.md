@@ -46,10 +46,10 @@ closeOnSwipe          | Boolean   | true
 You can add custom config as a second argument to `showMessage` call to configure individual messages. E.g. `showMessage('You are awesome!', { duration: 3000 })`.
 
 ## Custom message component
-Default message will receive only string, but you can implement your own message component to work with any other objects e.g Error instances:
+Default message will receive only string, but you can implement your own message component to work with any other objects e.g Error instances. Your message component will also be passed a `hideMessage` prop. Simply call `hideMessage()` to hide the notification.
 
 ```jsx
-function Message({ message }) {
+function Message({ message, hideMessage }) {
   if (message instanceof Error) {
     // return error-styled message
   } else {

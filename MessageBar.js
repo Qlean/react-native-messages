@@ -114,8 +114,12 @@ export default class MessageBar extends Component {
         ]}
       >
         <View {...this.panResponder.panHandlers}>
-          {this.state.message &&
-            <MessageComponent message={this.state.message.message}/>
+          {this.state.message && (
+            <MessageComponent
+              message={this.state.message.message}
+              hideMessage={() => this.hideMessage(this.state.message)}
+            />
+            )
           }
         </View>
       </Animated.View>
